@@ -1,0 +1,66 @@
+MySQL Shell 8.0.36
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+MySQL JS> \sql
+Switching to SQL mode... Commands end with ;
+MySQL SQL> \c mc-- root@localhost
+Creating a session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 36 (X protocol)
+Server version: 8.0.36 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+MySQL [localhost:33060+ ssl] SQL> use tbd3;
+Default schema set to `tbd3`.
+Fetching global names, object names from `tbd3` for auto-completion... Press ^C to stop.
+MySQL [localhost:33060+ ssl/tbd3] SQL> select generar_actorid();
++-------------------+
+| generar_actorid() |
++-------------------+
+|               201 |
++-------------------+
+1 row in set (0.7381 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> select max(actor_id) from actor;!A!A!
++---------------+
+| max(actor_id) |
++---------------+
+|           200 |
++---------------+
+1 row in set (0.0020 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> desc actor;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| actor_id    | smallint unsigned | NO   |     | 0                 |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   |     | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+5 rows in set (0.0043 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> insert into actor(first_name, last_name) value ('Juanito', 'Manos largas');
+Query OK, 1 row affected (1.6585 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> select * from actor where actorid = 201;
+ERROR: 1054: Unknown column 'actorid' in 'where clause'
+MySQL [localhost:33060+ ssl/tbd3] SQL> select * from actor where actor_id = 201;
++----------+------------+--------------+---------------------+-------+
+| actor_id | first_name | last_name    | last_update         | email |
++----------+------------+--------------+---------------------+-------+
+|      201 | Juanito    | Manos largas | 2024-05-02 17:35:25 | NULL  |
++----------+------------+--------------+---------------------+-------+
+1 row in set (0.0029 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> show tables;
++----------------+
+| Tables_in_tbd3 |
++----------------+
+| actor          |
++----------------+
+1 row in set (0.0043 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> delete from actor;
+Query OK, 201 rows affected (0.2873 sec)
+MySQL [localhost:33060+ ssl/tbd3] SQL> insert into actor(first_name, last_name) value ('Juanito', 'Manos largas');
+ERROR: 1048: Column 'actor_id' cannot be null
+MySQL [localhost:33060+ ssl/tbd3] SQL>
